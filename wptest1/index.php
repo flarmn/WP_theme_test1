@@ -17,17 +17,27 @@ padding:0px;
 </style>
 
 <body>
-  <header style = 'background:green; height:10vw'>
-    <section>
+  <header style = 'background:green; height:auto'>
+   
+");
+
+wp_nav_menu( array( 'theme_location' => 'header-menu' ) ); 
+
+echo("
+     <section>
       <p class = '' style = 'text-align:left; margin-left: 20px; padding-top:10px; font-size: 5vw; color: white; text-transform: uppercase;'>Your logo</p>
-    </section>
+      </section>
   </header>
 
 ");
 
 
+
 echo '<div class = "container">';
+
 ?>
+
+
 
 <!-- Start the Loop. -->
  <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
@@ -66,6 +76,7 @@ echo '<div class = "container">';
         }
     }
 
+ 
 
 ?>
 
@@ -80,14 +91,22 @@ echo '<div class = "container">';
  	<!-- Display the Post's content in a div box. -->
 
  	<div class="entry">
+    <!-- Display a comma separated list of the Post's Categories. -->
+    <p class="postmetadata"><?php _e( 'Posted in' ); ?> <?php the_category( ', ' ); ?></p>
+    <!-- Dispalaing THeme thumbnail -->
+<?php
+if ( has_post_thumbnail() ) {
+    the_post_thumbnail('thumbnail');
+}
+?>
  		<?php the_content(); ?>
  	</div>
 
 
- 	<!-- Display a comma separated list of the Post's Categories. -->
+ 
 
- 	<p class="postmetadata"><?php _e( 'Posted in' ); ?> <?php the_category( ', ' ); ?></p>
  	</div> <!-- closes the first div box -->
+
 
 
  	<!-- Stop The Loop (but note the "else:" - see next line). -->
@@ -102,5 +121,12 @@ echo '<div class = "container">';
 
  	<!-- REALLY stop The Loop. -->
  <?php endif; ?>
+
+<ul id="sidebar">
+    <?php if ( ! dynamic_sidebar() ) : ?>
+        <li>{static sidebar item 1}</li>
+        <li>{static sidebar item 2}</li>
+    <?php endif; ?>
+</ul>
 
 <?php get_footer(); ?>
